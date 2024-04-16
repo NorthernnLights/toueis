@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: will-playground
+  name: will-playground2
   namespace: dev
   labels:
     app: will-playground
