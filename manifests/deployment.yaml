@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: will-playground2
+  name: will-playground
   namespace: dev
   labels:
     app: will-playground
@@ -31,5 +31,5 @@ spec:
     app: will-playground
   ports:
     - protocol: TCP
-      port: 8080
+      port: 8888
       targetPort: 8888
