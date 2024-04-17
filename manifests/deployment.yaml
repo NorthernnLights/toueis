@@ -27,27 +27,9 @@ metadata:
 spec:
   selector:
     app: myapp
+  type: NodePort
   ports:
-    - protocol: TCP
+    - nodePort: 30171
+      protocol: TCP
       port: 8888
       targetPort: 8888
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: myapp-ingress
-  namespace: dev
-  annotations:
-    ingress.kubernetes.io/ssl-redirect: "false"
-spec:
-  rules:
-  - host: "localhost"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: myapp-service
-            port:
-              number: 8888
