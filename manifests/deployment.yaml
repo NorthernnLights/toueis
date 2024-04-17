@@ -1,22 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: will-playground
+  name: myapp
   namespace: dev
-  labels:
-    app: will-playground
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: will-playground
+      app: myapp
   template:
     metadata:
       labels:
-        app: will-playground
+        app: myapp
     spec:
       containers:
-        - name: playground
+        - name: myapp
           image: "wil42/playground:v1"
           ports:
             - containerPort: 8888
@@ -24,12 +22,32 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: will-playground-service
+  name: myapp-service
   namespace: dev
 spec:
   selector:
-    app: will-playground
+    app: myapp
   ports:
     - protocol: TCP
-      port: 8888
+      port: 80
       targetPort: 8888
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: myapp-ingress
+  namespace: dev
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+  - host: "localhost"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: myapp-service
+            port:
+              number: 80
